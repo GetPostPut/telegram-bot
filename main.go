@@ -30,7 +30,7 @@ func main() {
 			continue
 		}
 
-		// Отправление стикера администратору от пользователя и отправление стикера пользователю от админа
+		// Отправление стикера администратору от пользователя и отправление стикера пользователю от администратора
 		if update.Message.Sticker != nil {
 			if update.Message.From.ID != admin.Admin_id {
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
