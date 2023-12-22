@@ -16,7 +16,7 @@ func main() {
 		log.Println(err)
 	}
 
-	bot.Debug = true // Включение отладки, чтобы видеть логи в консоли
+	bot.Debug = true // Включение отладки чтобы видеть логи в консоли
 
 	log.Printf("Бот t.me/%s запущен", bot.Self.UserName)
 
