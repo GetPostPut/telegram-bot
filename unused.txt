@@ -1,0 +1,51 @@
+        // Создание кнопки в сообщении
+		msg := tgbotapi.NewMessage(Admin_id, "текст сообщения к которому будет приделана кнопка")
+		keyboard := tgbotapi.NewInlineKeyboardMarkup(
+			tgbotapi.NewInlineKeyboardRow(
+				tgbotapi.NewInlineKeyboardButtonData("текст отображаемый на кнопке", "название кнопки"),
+			),
+		)
+		msg.ReplyMarkup = keyboard
+		bot.Send(msg)
+
+		// Обработка нажатия кнопки в сообщении
+		if update.CallbackQuery != nil {
+
+			data := update.CallbackQuery.Data
+			if data == "название кнопки" {
+				// Действие при нажатии кнопки
+				msg := tgbotapi.NewMessage(admin.Admin_id, "текст")
+				_, err := bot.Send(msg)
+				if err != nil {
+					log.Println(err)
+				}
+			}
+		}
+        
+        // Отправление картинки
+        case "image":
+			// Путь к файлу изображения
+			imagePath := "J:/Рабочий стол/да/telegram-bot/image.jpg"
+			// Создание нового сообщения с изображением
+			msg := tgbotapi.NewPhotoUpload(admin.Admin_id, imagePath)
+			// Отправка сообщения с изображением
+			response, err := bot.Send(msg)
+			if err != nil {
+				log.Println(err)
+			}
+			// Вывод идентификатора отправленного сообщения
+			log.Printf("Отправлено сообщение с идентификатором %d", response.MessageID)
+
+		// Отправление голосового сообщения
+		case "audio":
+			// Путь к файлу голосового сообщения
+			imagePath := "J:/Рабочий стол/да/telegram-bot/audio.ogg"
+			// Создание нового голосового сообщения
+			msg := tgbotapi.NewVoiceUpload(admin.Admin_id, imagePath)
+			// Отправка голосового сообщения
+			response, err := bot.Send(msg)
+			if err != nil {
+				log.Println(err)
+			}
+			// Вывод идентификатора отправленного голосового сообщения
+			log.Printf("Отправлено голосовое сообщение с идентификатором %d", response.MessageID)
