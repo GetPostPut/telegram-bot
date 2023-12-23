@@ -21,7 +21,7 @@ func Admin_on(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	}
 }
 
-// Делаем из update.Message.From.FirstName (имени	), update.Message.From.LastName (фамилии), update.Message.Chat.ID) (ID) и update.Message.From.UserName (@username) одно целое
+// Делаем из update.Message.From.FirstName (имени), update.Message.From.LastName (фамилии), update.Message.Chat.ID) (ID) и update.Message.From.UserName (@username) одно целое
 func userName(update tgbotapi.Update) string {
 	if update.Message.From.UserName == "" {
 		return fmt.Sprintf("%s %s (username неизвестен) [ID %d]", update.Message.From.FirstName, update.Message.From.LastName, update.Message.From.ID)
