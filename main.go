@@ -58,7 +58,7 @@ func main() {
 			}
 		}
 
-		// Отправление видео администратору от пользователя и отправление видео пользователю от админа
+		// Отправление видео администратору от пользователя и отправление видео пользователю от администратора
 		if update.Message.Video != nil {
 			if update.Message.From.ID != admin.Admin_id {
 				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
