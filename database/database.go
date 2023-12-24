@@ -20,6 +20,7 @@ const (
 	dbname   = "tgbot_users"
 )
 
+// Функция для занесения нового пользователя в базу данных
 func InsertDb(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Создаем подключение к базе данных
 	dbinfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
