@@ -178,29 +178,27 @@ func AdminStickerMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 
 // Удаление отправленного пользователю сообщения
 func DelMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
-	if update.Message.Chat.ID == Admin_id {
-		delargs := strings.TrimSpace(update.Message.CommandArguments()) // Аргументы для удаления сообщения (ChatId и MessageID), с помощью strings.TrimSpace убираем лишние пробелы по бокам
-		// Разбиваем аргументы на две переменные
-		argDelList := strings.Fields(delargs)
-		if len(argDelList) < 2 || delargs == "" { // Если аргументы не указаны или их не хватает выводим подсказку
-			msg := tgbotapi.NewMessage(Admin_id, "Для удаления сообщения необходимо ввести /del [ChatId] [MessageID].")
+	delargs := strings.TrimSpace(update.Message.CommandArguments()) // Аргументы для удаления сообщения (ChatId и MessageID), с помощью strings.TrimSpace убираем лишние пробелы по бокам
+	// Разбиваем аргументы на две переменные
+	argDelList := strings.Fields(delargs)
+	if len(argDelList) < 2 || delargs == "" { // Если аргументы не указаны или их не хватает выводим подсказку
+		msg := tgbotapi.NewMessage(Admin_id, "Для удаления сообщения необходимо ввести /del [ChatId] [MessageID].")
+		bot.Send(msg)
+	}
+	if len(argDelList) >= 2 {
+		DChatId := argDelList[0]               // ChatId получателя в виде строки
+		DMessageId := argDelList[1]            // MessageIdполучателя в виде строки
+		DChatIdInt, _ := strconv.Atoi(DChatId) // ChatId получателя в виде числа
+		DChatIdInt64 := int64(DChatIdInt)
+		DMessageIdInt, _ := strconv.Atoi(DMessageId) // MessageID получателя в виде числа
+		_, err := bot.DeleteMessage(tgbotapi.NewDeleteMessage(DChatIdInt64, DMessageIdInt))
+		if err != nil {
+			log.Println(err)
+			msg := tgbotapi.NewMessage(Admin_id, "Ты что-то сделал не так, попробуй ещё раз.")
 			bot.Send(msg)
-		}
-		if len(argDelList) >= 2 {
-			DChatId := argDelList[0]               // ChatId получателя в виде строки
-			DMessageId := argDelList[1]            // MessageIdполучателя в виде строки
-			DChatIdInt, _ := strconv.Atoi(DChatId) // ChatId получателя в виде числа
-			DChatIdInt64 := int64(DChatIdInt)
-			DMessageIdInt, _ := strconv.Atoi(DMessageId) // MessageID получателя в виде числа
-			_, err := bot.DeleteMessage(tgbotapi.NewDeleteMessage(DChatIdInt64, DMessageIdInt))
-			if err != nil {
-				log.Println(err)
-				msg := tgbotapi.NewMessage(Admin_id, "Ты что-то сделал не так, попробуй ещё раз.")
-				bot.Send(msg)
-			} else {
-				msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Сообщение [MessageID: %d] пользователю с ID %d было успешно удалено!", DMessageIdInt, DChatIdInt64))
-				bot.Send(msg)
-			}
+		} else {
+			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Сообщение [MessageID: %d] пользователю с ID %d было успешно удалено!", DMessageIdInt, DChatIdInt64))
+			bot.Send(msg)
 		}
 	}
 }
