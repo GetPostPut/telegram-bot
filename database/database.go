@@ -47,7 +47,7 @@ func InsertDb(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	}
 }
 
-// Функция для записи нового пользователя в базу данных
+// Заносим пользователя в базу данных
 func InsertUser(db *sql.DB, userID int, username string) error {
 	if username == "" {
 		username = "unknown"
