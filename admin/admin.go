@@ -59,14 +59,14 @@ func PicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	fileConfig := tgbotapi.FileConfig{FileID: photo.FileID}
 	// Создание объекта tgbotapi.PhotoConfig для отправки фотографии
 	photoConfig := tgbotapi.NewPhotoShare(Admin_id, fileConfig.FileID)
-	// Отправка фотографии администратору
+	// Отправление фотографии администратору
 	_, err := bot.Send(photoConfig)
 	if err != nil {
 		log.Println("Error sending photo:", err)
 	}
 }
 
-// Отправление сообщения пользователю  через бота
+// Отправление сообщения пользователю через бота
 func AdminMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	if update.Message.Chat.ID == Admin_id {
 		messagep := strings.TrimSpace(update.Message.CommandArguments()) // Сообщение, которое будет отправлено пользователю /message [текст который увидит пользователь], с помощью strings.TrimSpace убираем лишние пробелы по бокам
@@ -90,7 +90,7 @@ func AdminMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	}
 }
 
-// Отправление картинки пользователю  через бота
+// Отправление картинки пользователю через бота
 func AdminPicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение последней полученной фотографии
 	photo := (*update.Message.Photo)[len(*update.Message.Photo)-1]
@@ -107,7 +107,7 @@ func AdminPicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	bot.Send(msg)
 }
 
-// Отправление видео пользователю  через бота
+// Отправление видео пользователю через бота
 func AdminVideoMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение последней полученной фотографии
 	video := (*update.Message.Video)
@@ -124,7 +124,7 @@ func AdminVideoMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	bot.Send(msg)
 }
 
-// Отправление аудио сообщения пользователю  через бота
+// Отправление аудио сообщения пользователю через бота
 func AdminVoiceMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение последней полученной аудио сообщения
 	voice := (*update.Message.Voice)
@@ -142,7 +142,7 @@ func AdminVoiceMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 
 }
 
-// Отправление видео сообщения пользователю  через бота
+// Отправление видео сообщения пользователю через бота
 func AdminVideoNoteMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение последнего полученного видео сообщения
 	videoNote := (*update.Message.VideoNote)
@@ -159,7 +159,7 @@ func AdminVideoNoteMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	bot.Send(msg)
 }
 
-// Отправление видео сообщения пользователю  через бота
+// Отправление видео сообщения пользователю через бота
 func AdminStickerMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение последнего полученного стикера
 	sticker := (*update.Message.Sticker)
