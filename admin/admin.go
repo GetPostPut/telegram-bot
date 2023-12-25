@@ -50,7 +50,7 @@ func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) { // Функция д
 	}
 }
 
-// Отправка сообщения админу о том, что пользователь отправил картинку
+// Отправка сообщения администратору о том, что пользователь отправил картинку
 func PicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Пользователь %s отправил картинку:", userName(update)))
 	bot.Send(msg)
