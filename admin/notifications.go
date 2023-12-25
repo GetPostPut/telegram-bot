@@ -83,3 +83,19 @@ func StickerMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 		log.Println("Error sending sticker:", err)
 	}
 }
+
+// Отправка сообщения администратору о том, что пользователь отправил картинку
+func PicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
+	msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Пользователь %s отправил картинку:", userName(update)))
+	bot.Send(msg)
+	// Определение последней полученной фотографии
+	photo := (*update.Message.Photo)[len(*update.Message.Photo)-1]
+	fileConfig := tgbotapi.FileConfig{FileID: photo.FileID}
+	// Создание объекта tgbotapi.PhotoConfig для отправки фотографии
+	photoConfig := tgbotapi.NewPhotoShare(Admin_id, fileConfig.FileID)
+	// Отправление фотографии администратору
+	_, err := bot.Send(photoConfig)
+	if err != nil {
+		log.Println("Error sending photo:", err)
+	}
+}
