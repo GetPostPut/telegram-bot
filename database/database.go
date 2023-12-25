@@ -56,7 +56,7 @@ func InsertUser(db *sql.DB, userID int, username string) error {
 	return err
 }
 
-// Функция для отправки сообщения с количеством пользователей
+// Функция для отправки сообщения с количеством пользователей администратору
 func UsersCount(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	usersCount, err := SelectUsersCount()
 	if err != nil {
