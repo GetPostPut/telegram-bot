@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	bot, err := tgbotapi.NewBotAPI("token") // Токен бота t.me/BotFather
+	bot, err := tgbotapi.NewBotAPI(config.BotToken) // Токен бота t.me/BotFather
 	if err != nil {
 		log.Println(err)
 	}
