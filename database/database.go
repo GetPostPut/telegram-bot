@@ -13,11 +13,11 @@ import (
 
 // Настройки базы данных
 const (
-	host     = admin.DbHost
-	port     = admin.DbPort
-	user     = admin.DbUser
-	password = admin.DbPassword
-	dbname   = admin.DbName
+	host     = config.DbHost
+	port     = config.DbPort
+	user     = config.DbUser
+	password = config.DbPassword
+	dbname   = config.DbName
 )
 
 // Функция для занесения нового пользователя в базу данных
