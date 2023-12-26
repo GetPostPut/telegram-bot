@@ -13,11 +13,11 @@ import (
 
 // Настройки базы данных
 const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "password"
-	dbname   = "tgbot_users"
+	host     = admin.DbHost
+	port     = admin.DbPort
+	user     = admin.DbUser
+	password = admin.DbPassword
+	dbname   = admin.DbName
 )
 
 // Функция для занесения нового пользователя в базу данных
