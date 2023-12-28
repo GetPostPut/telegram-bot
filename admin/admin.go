@@ -13,6 +13,10 @@ const Admin_id = 5451284197 // ID администратора
 
 var P_id int64 = 5451284197 // ID получателя сообщений от бота
 
+var BlockUserId int64 = 0 // ID заблокирванного пользователя
+
+var Block_list = []int{}
+
 func Admin_on(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Доступые команды:\n/msg - отправка сообщения пользователю /msg [текст];\n/chat_id - изменение id получателя /chat_id [id];\n/del - удаление сообщения /del [ChatId] [MessageID];\n/edit - редактирование сообщения /edit [ChatId] [MessageID] [отредактированный текст];\n/users - получение количества пользователей;")
 	_, err := bot.Send(msg)
@@ -31,22 +35,19 @@ func userName(update tgbotapi.Update) string {
 }
 
 func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) { // Функция для изменения id получателя
-	if update.Message.Chat.ID == Admin_id {
-		if update.Message.CommandArguments() == "" {
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Необходимо ввести ID получателя. Например, /chat_id 5451284197")
+	if update.Message.CommandArguments() == "" {
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Необходимо ввести ID получателя. Например: /chat_id 5451284197")
+		bot.Send(msg)
+	} else {
+		str_id := strings.TrimSpace(update.Message.CommandArguments()) // id получателя в виде строки
+		new_p_id, _ := strconv.Atoi(str_id)                            // id получателя в виде числа
+		P_id = int64(new_p_id)
+		if P_id == 0 || len(str_id) > 11 {
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Ты что-то сделал не так. Попробуй ещё раз.")
 			bot.Send(msg)
 		} else {
-			str_id := strings.TrimSpace(update.Message.CommandArguments()) // id получателя в виде строки
-			new_p_id, _ := strconv.Atoi(str_id)                            // id получателя в виде числа
-			P_id = int64(new_p_id)
-			if P_id == 0 || len(str_id) > 11 {
-				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Ты что-то сделал не так. Попробуй ещё раз.")
-				bot.Send(msg)
-			} else {
-				msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Готово! ID получателя был изменён.\nТекущий ID получателя: %d.", P_id))
-				bot.Send(msg)
-			}
-		}
+			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Готово! ID получателя был изменён.\nТекущий ID получателя: %d.", P_id))
+			bot.Send(msg)
 	}
 }
 
@@ -212,4 +213,34 @@ func EditMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 			bot.Send(msg)
 		}
 	}
+}
+
+// Функция для блокировки пользователя
+func BlockUser(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
+	if update.Message.CommandArguments() == "" {
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Необходимо ввести ID пользователя. Например: /block 5451284197")
+		bot.Send(msg)
+	} else {
+		blockUserIdStr := strings.TrimSpace(update.Message.CommandArguments()) // id получателя в виде строки
+		blockUserIdInt, _ := strconv.Atoi(blockUserIdStr)                      // id получателя в виде числа
+		BlockUserId := int64(blockUserIdInt)
+		if BlockUserId == 0 || len(blockUserIdStr) > 12 {
+			msg := tgbotapi.NewMessage(Admin_id, "Ты что-то сделал не так. Попробуй ещё раз.")
+			bot.Send(msg)
+		} else {
+			Block_list = append(Block_list, int(BlockUserId))
+			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Готово! Пользователь с ID %d был заблокирован.", BlockUserId))
+			bot.Send(msg)
+		}
+	}
+}
+
+// Функция, которая проверяет, заблокирован ли пользователь с определенным ID
+func UserBlocked(update tgbotapi.Update, bot *tgbotapi.BotAPI) bool {
+	for _, blockedID := range Block_list {
+		if blockedID == int(update.Message.Chat.ID) {
+			return true
+		}
+	}
+	return false
 }
