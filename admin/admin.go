@@ -34,6 +34,7 @@ func userName(update tgbotapi.Update) string {
 	}
 }
 
+
 func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) { // Функция для изменения id получателя
 	if update.Message.CommandArguments() == "" {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Необходимо ввести ID получателя. Например: /chat_id 5451284197")
@@ -42,12 +43,13 @@ func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) { // Функция д
 		str_id := strings.TrimSpace(update.Message.CommandArguments()) // id получателя в виде строки
 		new_p_id, _ := strconv.Atoi(str_id)                            // id получателя в виде числа
 		P_id = int64(new_p_id)
-		if P_id == 0 || len(str_id) > 11 {
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Ты что-то сделал не так. Попробуй ещё раз.")
+		if P_id == 0 || len(str_id) > 12 {
+			msg := tgbotapi.NewMessage(Admin_id, "Ты что-то сделал не так. Попробуй ещё раз.")
 			bot.Send(msg)
 		} else {
 			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Готово! ID получателя был изменён.\nТекущий ID получателя: %d.", P_id))
 			bot.Send(msg)
+		}
 	}
 }
 
@@ -187,6 +189,7 @@ func DelMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 		}
 	}
 }
+
 
 func EditMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	editargs := strings.TrimSpace(update.Message.CommandArguments()) // Аргументы для удаления сообщения (ChatId и MessageID), с помощью strings.TrimSpace убираем лишние пробелы по бокам
