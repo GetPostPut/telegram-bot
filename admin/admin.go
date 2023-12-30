@@ -17,8 +17,8 @@ var BlockUserId int64 = 0 // ID заблокирванного пользова�
 
 var Block_list = []int{}
 
-func Admin_on(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
-	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Доступые команды:\n/msg - отправка сообщения пользователю /msg [текст];\n/chat_id - изменение id получателя /chat_id [id];\n/del - удаление сообщения /del [ChatId] [MessageID];\n/edit - редактирование сообщения /edit [ChatId] [MessageID] [отредактированный текст];\n/users - получение количества пользователей;")
+func AdminHelp(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Доступые команды:\n/msg - отправка сообщения пользователю /msg [текст];\n/chat_id - изменение id получателя /chat_id [id];\n/del - удаление сообщения /del [ChatId] [MessageID];\n/edit - редактирование сообщения /edit [ChatId] [MessageID] [отредактированный текст];\n/users - получение количества пользователей;\n/block - заблокировать пользователя /block [ChatId]")
 	_, err := bot.Send(msg)
 	if err != nil {
 		log.Println(err)
