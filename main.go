@@ -136,7 +136,7 @@ func main() {
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
-					admin.Admin_on(update, bot)
+					admin.AdminHelp(update, bot)
 				}
 			case "chat_id":
 				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
