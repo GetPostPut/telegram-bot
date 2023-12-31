@@ -232,7 +232,7 @@ func BlockUser(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 			bot.Send(msg)
 		} else {
 			Block_list = append(Block_list, int(BlockUserId))
-			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Готово! Пользователь с ID %d был заблокирован.", BlockUserId))
+			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Готово! Пользователь с ID %d заблокирован.", BlockUserId))
 			bot.Send(msg)
 		}
 	}
