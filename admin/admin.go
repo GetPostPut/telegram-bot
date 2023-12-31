@@ -34,7 +34,7 @@ func userName(update tgbotapi.Update) string {
 	}
 }
 
-
+// Функция для изменения ID получателя сообщений от администратора
 func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) { // Функция для изменения id получателя
 	if update.Message.CommandArguments() == "" {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Необходимо ввести ID получателя. Например: /chat_id 5451284197")
@@ -190,7 +190,7 @@ func DelMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	}
 }
 
-
+// Функция для редактирования отправленного сообщения
 func EditMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	editargs := strings.TrimSpace(update.Message.CommandArguments()) // Аргументы для удаления сообщения (ChatId и MessageID), с помощью strings.TrimSpace убираем лишние пробелы по бокам
 	argEditList := strings.Fields(editargs)
