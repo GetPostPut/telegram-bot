@@ -3,13 +3,14 @@ package admin
 import (
 	"fmt"
 	"log"
+	"tgbot3/config"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 // Уведомление о запуске бота пользователем
 func DefaultMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
-	if update.Message.From.ID != Admin_id {
+	if int64(update.Message.From.ID) != config.Admin_id {
 		if update.Message.Text == "/start" {
 			msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Пользователь %s запустил бота.\n\n", userName(update)))
 			bot.Send(msg)
@@ -27,7 +28,7 @@ func VideoMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение полученного видео
 	video := (*update.Message.Video)
 	fileConfig := tgbotapi.FileConfig{FileID: video.FileID}
-	// Создание объекта tgbotapi.videoConfig для отправление видео
+	// Создание объекта tgbotapi.videoConfig для отправки видео
 	videoConfig := tgbotapi.NewVideoShare(Admin_id, fileConfig.FileID)
 	// Отправление видео администратору
 	_, err := bot.Send(videoConfig)
@@ -43,7 +44,7 @@ func VoiceMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение полученного голосового сообщения
 	voice := (*update.Message.Voice)
 	fileConfig := tgbotapi.FileConfig{FileID: voice.FileID}
-	// Создание объекта tgbotapi.voiceConfig для отправки голосового сообщения
+	// Создание объекта tgbotapi.voiceConfig для отправление голосового сообщения
 	voiceConfig := tgbotapi.NewVoiceShare(Admin_id, fileConfig.FileID)
 	// Отправление голосового сообщения администратору
 	_, err := bot.Send(voiceConfig)
@@ -91,7 +92,7 @@ func PicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение последней полученной фотографии
 	photo := (*update.Message.Photo)[len(*update.Message.Photo)-1]
 	fileConfig := tgbotapi.FileConfig{FileID: photo.FileID}
-	// Создание объекта tgbotapi.PhotoConfig для отправки фотографии
+	// Создание объекта tgbotapi.PhotoConfig для отправление фотографии
 	photoConfig := tgbotapi.NewPhotoShare(Admin_id, fileConfig.FileID)
 	// Отправление фотографии администратору
 	_, err := bot.Send(photoConfig)
