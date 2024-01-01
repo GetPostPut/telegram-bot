@@ -27,7 +27,7 @@ func VideoMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение полученного видео
 	video := (*update.Message.Video)
 	fileConfig := tgbotapi.FileConfig{FileID: video.FileID}
-	// Создание объекта tgbotapi.videoConfig для отправки видео
+	// Создание объекта tgbotapi.videoConfig для отправление видео
 	videoConfig := tgbotapi.NewVideoShare(Admin_id, fileConfig.FileID)
 	// Отправление видео администратору
 	_, err := bot.Send(videoConfig)
@@ -45,7 +45,7 @@ func VoiceMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	fileConfig := tgbotapi.FileConfig{FileID: voice.FileID}
 	// Создание объекта tgbotapi.voiceConfig для отправки голосового сообщения
 	voiceConfig := tgbotapi.NewVoiceShare(Admin_id, fileConfig.FileID)
-	// Отправка голосового сообщения администратору
+	// Отправление голосового сообщения администратору
 	_, err := bot.Send(voiceConfig)
 	if err != nil {
 		log.Println("Error sending video note:", err)
@@ -61,7 +61,7 @@ func VideoNoteMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	fileConfig := tgbotapi.FileConfig{FileID: videoNote.FileID}
 	// Создание объекта tgbotapi.videoNoteConfig для отправки видео сообщения
 	videoNoteConfig := tgbotapi.NewVideoNoteShare(Admin_id, 0, fileConfig.FileID)
-	// Отправка видео сообщения администратору
+	// Отправление видео сообщения администратору
 	_, err := bot.Send(videoNoteConfig)
 	if err != nil {
 		log.Println("Error sending video note:", err)
@@ -75,16 +75,16 @@ func StickerMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	// Определение полученного стикера
 	sticker := (*update.Message.Sticker)
 	fileConfig := tgbotapi.FileConfig{FileID: sticker.FileID}
-	// Создание объекта tgbotapi.stickerConfig для отправки стикера
+	// Создание объекта tgbotapi.stickerConfig для отправление стикера
 	stickerConfig := tgbotapi.NewStickerShare(Admin_id, fileConfig.FileID)
-	// Отправка стикера администратору
+	// Отправление стикера администратору
 	_, err := bot.Send(stickerConfig)
 	if err != nil {
 		log.Println("Error sending sticker:", err)
 	}
 }
 
-// Отправка сообщения администратору о том, что пользователь отправил картинку
+// Отправление сообщения администратору о том, что пользователь отправил картинку
 func PicMsg(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	msg := tgbotapi.NewMessage(Admin_id, fmt.Sprintf("Пользователь %s отправил картинку:", userName(update)))
 	bot.Send(msg)
