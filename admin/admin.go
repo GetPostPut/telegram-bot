@@ -5,11 +5,12 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"tgbot3/config"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-const Admin_id = 5451284197 // ID администратора
+const Admin_id = config.Admin_id // ID администратора
 
 var P_id int64 = 5451284197 // ID получателя сообщений от бота
 
@@ -18,7 +19,7 @@ var BlockUserId int64 = 0 // ID заблокирванного пользова�
 var Block_list = []int{}
 
 func AdminHelp(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
-	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Доступые команды:\n/msg - отправка сообщения пользователю /msg [текст];\n/chat_id - изменение id получателя /chat_id [id];\n/del - удаление сообщения /del [ChatId] [MessageID];\n/edit - редактирование сообщения /edit [ChatId] [MessageID] [отредактированный текст];\n/users - получение количества пользователей;\n/block - заблокировать пользователя /block [ChatId]")
+	msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Доступые команды:\n/msg - отправка сообщения пользователю /msg [текст];\n/chat_id - изменение id получателя /chat_id [id];\n/del - удаление сообщения /del [ChatId] [MessageID];\n/edit - редактирование сообщения /edit [ChatId] [MessageID] [отредактированный текст];\n/users - получение количества пользователей;")
 	_, err := bot.Send(msg)
 	if err != nil {
 		log.Println(err)
@@ -35,7 +36,7 @@ func userName(update tgbotapi.Update) string {
 }
 
 // Функция для изменения ID получателя сообщений от администратора
-func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) { // Функция для изменения id получателя
+func ChatId(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	if update.Message.CommandArguments() == "" {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Необходимо ввести ID получателя. Например: /chat_id 5451284197")
 		bot.Send(msg)
