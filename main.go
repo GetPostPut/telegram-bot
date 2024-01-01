@@ -40,7 +40,7 @@ func main() {
 		} else {
 			// Отправление стикера администратору от пользователя и отправление стикера пользователю от администратора
 			if update.Message.Sticker != nil {
-				if int64(update.Message.From.ID) != admin.Admin_id {
+				if int64(update.Message.From.ID) != config.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -54,7 +54,7 @@ func main() {
 
 			// Отправление картинки администратору от пользователя и отправление картинки пользователю от администратора
 			if update.Message.Photo != nil {
-				if int64(update.Message.From.ID) != admin.Admin_id {
+				if int64(update.Message.From.ID) != config.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -68,7 +68,7 @@ func main() {
 
 			// Отправление видео администратору от пользователя и отправление видео пользователю от администратора
 			if update.Message.Video != nil {
-				if int64(update.Message.From.ID) != admin.Admin_id {
+				if int64(update.Message.From.ID) != config.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -82,7 +82,7 @@ func main() {
 
 			// Отправление аудио сообщения администратору от пользователя и отправление аудио сообщения пользователю от администратора
 			if update.Message.Voice != nil {
-				if int64(update.Message.From.ID) != admin.Admin_id {
+				if int64(update.Message.From.ID) != config.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -96,7 +96,7 @@ func main() {
 
 			// Отправление видео сообщения администратору от пользователя и отправление видео сообщения пользователю от администратора
 			if update.Message.VideoNote != nil {
-				if int64(update.Message.From.ID) != admin.Admin_id {
+				if int64(update.Message.From.ID) != config.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -185,7 +185,7 @@ func main() {
 			switch update.Message.Text {
 			default:
 				if update.Message.Sticker != nil || update.Message.Voice != nil || update.Message.Video != nil || update.Message.Photo != nil || update.Message.Command() != "" ||
-					update.Message.Text == "/" || int64(update.Message.From.ID) != config.Admin_id || update.Message.VideoNote != nil {
+					update.Message.Text == "/" || int64(update.Message.From.ID) == config.Admin_id || update.Message.VideoNote != nil {
 					continue
 				} else {
 					// Отпралвение сообщения пользователя администратору
