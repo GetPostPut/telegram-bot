@@ -16,7 +16,7 @@ func main() {
 		log.Println(err)
 	}
 
-	bot.Debug = true // Включение отладки чтобы видеть логи в консоли
+	bot.Debug = true // Включение отладки, чтобы видеть логи в консоли
 
 	log.Printf("Бот t.me/%s запущен", bot.Self.UserName)
 
@@ -37,10 +37,10 @@ func main() {
 			if err != nil {
 				log.Println(err)
 			}
-			} else {
+		} else {
 			// Отправление стикера администратору от пользователя и отправление стикера пользователю от администратора
 			if update.Message.Sticker != nil {
-				if update.Message.From.ID != admin.Admin_id {
+				if int64(update.Message.From.ID) != admin.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -51,10 +51,10 @@ func main() {
 					admin.AdminStickerMsg(update, bot)
 				}
 			}
-	
+
 			// Отправление картинки администратору от пользователя и отправление картинки пользователю от администратора
 			if update.Message.Photo != nil {
-				if update.Message.From.ID != admin.Admin_id {
+				if int64(update.Message.From.ID) != admin.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -65,10 +65,10 @@ func main() {
 					admin.AdminPicMsg(update, bot)
 				}
 			}
-	
+
 			// Отправление видео администратору от пользователя и отправление видео пользователю от администратора
 			if update.Message.Video != nil {
-				if update.Message.From.ID != admin.Admin_id {
+				if int64(update.Message.From.ID) != admin.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -79,10 +79,10 @@ func main() {
 					admin.AdminVideoMsg(update, bot)
 				}
 			}
-	
+
 			// Отправление аудио сообщения администратору от пользователя и отправление аудио сообщения пользователю от администратора
 			if update.Message.Voice != nil {
-				if update.Message.From.ID != admin.Admin_id {
+				if int64(update.Message.From.ID) != admin.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -93,10 +93,10 @@ func main() {
 					admin.AdminVoiceMsg(update, bot)
 				}
 			}
-	
+
 			// Отправление видео сообщения администратору от пользователя и отправление видео сообщения пользователю от администратора
 			if update.Message.VideoNote != nil {
-				if update.Message.From.ID != admin.Admin_id {
+				if int64(update.Message.From.ID) != admin.Admin_id {
 					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Отправлено!")
 					_, err := bot.Send(msg)
 					if err != nil {
@@ -107,11 +107,11 @@ func main() {
 					admin.AdminVideoNoteMsg(update, bot)
 				}
 			}
-	
+
 			// Ответы бота на команды
 			switch update.Message.Command() {
 			case "start":
-				if update.Message.From.ID != admin.Admin_id {
+				if int64(update.Message.From.ID) != config.Admin_id {
 					// Запись нового пользователя в базу данных
 					database.InsertDb(update, bot)
 					// Отправка сообщения с клавиатурой
@@ -132,49 +132,49 @@ func main() {
 					admin.DefaultMsg(update, bot)
 				}
 			case "admin":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
 					admin.AdminHelp(update, bot)
 				}
 			case "chat_id":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
 					admin.ChatId(update, bot)
 				}
 			case "msg":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
 					admin.AdminMsg(update, bot)
 				}
 			case "del":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
 					admin.DelMsg(update, bot)
 				}
 			case "users":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
 					database.UsersCount(update, bot)
 				}
 			case "edit":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
 					admin.EditMsg(update, bot)
 				}
 			case "block":
-				if update.Message.From.ID != admin.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
+				if int64(update.Message.From.ID) != config.Admin_id { // Если команду запрашивает пользователь - отправляем уведомление об этом администратору
 					admin.DefaultMsg(update, bot)
 					continue
 				} else {
@@ -185,7 +185,7 @@ func main() {
 			switch update.Message.Text {
 			default:
 				if update.Message.Sticker != nil || update.Message.Voice != nil || update.Message.Video != nil || update.Message.Photo != nil || update.Message.Command() != "" ||
-					update.Message.Text == "/" || update.Message.From.ID == admin.Admin_id || update.Message.VideoNote != nil {
+					update.Message.Text == "/" || int64(update.Message.From.ID) != config.Admin_id || update.Message.VideoNote != nil {
 					continue
 				} else {
 					// Отпралвение сообщения пользователя администратору
