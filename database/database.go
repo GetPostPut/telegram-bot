@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"tgbot3/admin"
+	"tgbot3/config"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -35,6 +36,7 @@ func InsertDb(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	if err != nil {
 		log.Println(err)
 	}
+	
 	// Получаем информацию о новом пользователе
 	user := update.Message.From
 
@@ -56,7 +58,7 @@ func InsertUser(db *sql.DB, userID int, username string) error {
 	return err
 }
 
-// Функция для отправки сообщения с количеством пользователей администратору
+// Функция для отправления сообщения с количеством пользователей администратору
 func UsersCount(update tgbotapi.Update, bot *tgbotapi.BotAPI) {
 	usersCount, err := SelectUsersCount()
 	if err != nil {
