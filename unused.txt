@@ -42,7 +42,7 @@
 			imagePath := "J:/Рабочий стол/да/telegram-bot/audio.ogg"
 			// Создание нового голосового сообщения
 			msg := tgbotapi.NewVoiceUpload(admin.Admin_id, imagePath)
-			// Отправка голосового сообщения
+			// Отправление голосового сообщения
 			response, err := bot.Send(msg)
 			if err != nil {
 				log.Println(err)
