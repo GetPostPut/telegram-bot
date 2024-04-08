@@ -1,0 +1,8 @@
+bot-token: "your_token"
+admin-id: 123456789
+database:
+  password: "your_password"
+  host: "localhost"
+  port: 5432
+  user: "your_user"
+  name: "your_db"
